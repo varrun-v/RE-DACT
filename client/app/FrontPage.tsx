@@ -48,6 +48,19 @@ export default function TextRedactor() {
     }
   };
 
+  const handleDownload = () => {
+    const blob = new Blob([output], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "redacted.txt";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+  
+
   return (
     <Card className="p-6 max-w-2xl mx-auto space-y-6">
       <div className="space-y-2">
@@ -128,7 +141,7 @@ export default function TextRedactor() {
             readOnly
             className="min-h-[200px]"
           />
-          <Button variant="outline" className="w-full">
+          <Button variant="outline" className="w-full" onClick={handleDownload}>
             Download Redacted Text
           </Button>
         </div>
