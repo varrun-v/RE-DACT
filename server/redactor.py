@@ -5,7 +5,7 @@ nlp = spacy.load("en_core_web_sm")
 REDACTION_LEVELS = {
     "light": ["PERSON", "EMAIL"],
     "medium": ["PERSON", "EMAIL", "GPE", "ORG"],
-    "heavy": ["PERSON", "EMAIL", "GPE", "ORG", "DATE", "CARDINAL"]
+    "heavy": ["PERSON", "EMAIL", "GPE", "ORG", "DATE", "CARDINAL", "TIME", "MONEY"]
 }
 
 def redact_text(text: str, level: str) -> str:
