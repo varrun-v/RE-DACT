@@ -3,12 +3,17 @@ import spacy
 nlp = spacy.load("en_core_web_sm")
 
 REDACTION_LEVELS = {
-    "light": ["PERSON", "EMAIL"],
-    "medium": ["PERSON", "EMAIL", "GPE", "ORG"],
-    "heavy": ["PERSON", "EMAIL", "GPE", "ORG", "DATE", "CARDINAL", "TIME", "MONEY"]
+    "light": ["PERSON"],
+    "medium": ["PERSON", "GPE", "ORG"],
+    "heavy": ["PERSON", "GPE", "ORG", "DATE", "CARDINAL", "TIME", "MONEY"]
 }
 
+EMAIL_REGEX = r"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+
 def redact_text(text: str, level: str) -> str:
+
+    text = re.sub(EMAIL_REGEX, "[REDACTED]", text)
+
     doc = nlp(text)
     target_labels = REDACTION_LEVELS.get(level, [])
     redacted = text
